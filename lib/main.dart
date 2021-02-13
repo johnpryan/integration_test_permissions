@@ -3,18 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
 void main() {
-  runApp(LocationApp());
+  runApp(LocationApp(location: Location()));
 }
 
 class LocationApp extends StatefulWidget {
+  final Location location;
+
+  LocationApp({
+    this.location,
+  });
+
   @override
   _LocationAppState createState() => _LocationAppState();
 }
 
 class _LocationAppState extends State<LocationApp> {
-  Location location = Location();
   LocationData _locationData;
 
+  @override
   void initState() {
     super.initState();
     getLocation();
@@ -40,32 +46,24 @@ class _LocationAppState extends State<LocationApp> {
     );
   }
 
-  void getLocation() async {
-    var enabled = await location.serviceEnabled();
-    print('enabled: $enabled');
+  Future getLocation() async {
+    var enabled = await widget.location.serviceEnabled();
     if (!enabled) {
-      print('requestService');
-      enabled = await location.requestService();
-      print('enabled: $enabled');
+      enabled = await widget.location.requestService();
       if (!enabled) {
         return;
       }
     }
 
-    var granted = await location.hasPermission();
-    print('hasPermission: $granted');
+    var granted = await widget.location.hasPermission();
     if (granted == PermissionStatus.denied) {
-      print('requesting permission');
-      granted = await location.requestPermission();
-      print('requestPermission: $granted');
+      granted = await widget.location.requestPermission();
       if (granted != PermissionStatus.granted) {
         return;
       }
     }
 
-    print('getLocation()');
-    var data = await location.getLocation();
-    print('location data: $data');
+    var data = await widget.location.getLocation();
     setState(() {
       _locationData = data;
     });

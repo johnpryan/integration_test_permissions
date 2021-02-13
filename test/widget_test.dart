@@ -6,9 +6,15 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test_permissions/main.dart';
+import 'package:integration_test_permissions/src/mock_location.dart';
 
 void main() {
-  testWidgets('empty widget test', (WidgetTester tester) async {
-
+  testWidgets('displays the current location', (WidgetTester tester) async {
+    await tester.pumpWidget(LocationApp(location: MockLocation()));
+    await tester.pumpAndSettle();
+    expect(find.text('Getting location...'), findsOneWidget);
+    await tester.pump(Duration(seconds: 5));
+    expect(find.textContaining('Location:'), findsOneWidget);
   });
 }
