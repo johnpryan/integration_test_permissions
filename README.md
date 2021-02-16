@@ -1,6 +1,6 @@
 # Integration Testing with Permissions
 
-Flutter issue (#12561)[https://github.com/flutter/flutter/issues/12561]
+Flutter issue [#12561](https://github.com/flutter/flutter/issues/12561)
 describes problems with running Flutter Driver when there are apps that require
 permissions.
 
@@ -10,10 +10,12 @@ must get location permission to pass. (The unit test uses a mock version of the
 
 ## Run on an Android device using Flutter Driver:
 
-Use the `adb` command to enable the permssions needed in your tests:
+Use the `adb` command to enable the permssions needed in your tests before 
+running `flutter drive`:
 
 ```bash
 adb shell pm grant <appId> android.permission.ACCESS_COARSE_LOCATION
+
 flutter drive \
   --driver=integration_test/driver.dart \
   --target=integration_test/location_test.dart \
@@ -34,8 +36,11 @@ brew tap wix/brew
 brew install applesimutils
 ```
 
+Run `applesimutils` to enable permissions before running `flutter drive`:
+
 ```bash
 applesimutils --byId <deviceId> --bundle <appId> --setPermissions location=always
+
 flutter drive \
   --driver=integration_test/driver.dart \
   --target=integration_test/location_test.dart \
