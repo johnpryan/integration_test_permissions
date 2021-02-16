@@ -15,7 +15,7 @@ void main() {
 
     await tester.pumpAndSettle();
     expect(find.text('Getting location...'), findsOneWidget);
-    await tester.pump(Duration(seconds: 5));
+    await tester.pump(Duration(seconds: 10));
     expect(find.textContaining('Location:'), findsOneWidget);
   });
 }
