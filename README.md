@@ -15,6 +15,7 @@ running `flutter drive`:
 
 ```bash
 adb shell pm grant <appId> android.permission.ACCESS_COARSE_LOCATION
+adb shell pm grant <appId> android.permission.ACCESS_FINE_LOCATION
 
 flutter drive \
   --driver=integration_test/driver.dart \
